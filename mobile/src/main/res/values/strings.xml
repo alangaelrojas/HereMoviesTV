@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Alan TV</string>
+    <string name="none">None</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top rated</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="movies_not_found">Not found movies :(</string>
+    <string name="label_search">What we watch today?</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alan.alantv">
+    package="com.alan.alantv" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,7 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlanTV" >
         <activity
-            android:name=".MainActivity"
+            android:theme="@style/ThemeMaterial.AlanTV"
+            android:name=".app.browsemovie.BrowserMoviesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app.MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
@@ -32,13 +36,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".app.detailmovie.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PlaybackActivity"
+            android:name=".app.playbackvideo.PlaybackActivity"
             android:exported="false" />
         <activity
-            android:name=".BrowseErrorActivity"
+            android:name=".app.browsemovie.BrowseErrorActivity"
             android:exported="false" />
     </application>
 

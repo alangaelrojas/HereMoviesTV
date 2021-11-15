@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.movies.MoviesFragment">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chg_movies"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/popular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popular"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/topRated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/top_rated"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_movie"
+                android:visibility="gone"
+                />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerMovies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="@integer/shimmer_duration"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_item_movie" />
+                    <include layout="@layout/shimmer_item_movie" />
+                    <include layout="@layout/shimmer_item_movie" />
+                    <include layout="@layout/shimmer_item_movie" />
+                    <include layout="@layout/shimmer_item_movie" />
+                    <include layout="@layout/shimmer_item_movie" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <include
+                android:id="@+id/ly_empty"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_empty_movies"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/circle"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/circle"
+            android:visibility="gone"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_search"
+            android:backgroundTint="@color/rate"
+            android:contentDescription="@string/none"
+            />
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

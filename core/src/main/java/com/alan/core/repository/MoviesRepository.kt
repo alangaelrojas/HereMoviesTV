@@ -14,6 +14,7 @@ class MoviesRepository {
     init {
         DaggerDataSourceComponent.builder().build().inject(this)
     }
+
     @Inject lateinit var webDS: MovieWebDS
 
     fun getPopularMovies(page: Int, observer: Observer<List<MovieEntity>>, error: Observer<Status>){
