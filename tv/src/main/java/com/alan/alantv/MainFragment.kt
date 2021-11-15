@@ -29,6 +29,11 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.alan.alantv.app.viewmodels.MoviesViewModel
+import com.alan.alantv.utils.ViewModelFactory
+import com.alan.core.data.wrappers.MovieEntity
+import com.alan.core.utils.Constants
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
@@ -43,15 +48,21 @@ class MainFragment : BrowseSupportFragment() {
     private var mBackgroundTimer: Timer? = null
     private var mBackgroundUri: String? = null
 
+    private lateinit var viewModel: MoviesViewModel
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
         super.onActivityCreated(savedInstanceState)
 
+        viewModel = ViewModelProvider(this, ViewModelFactory()).get(MoviesViewModel::class.java)
+
+        viewModel.getPopularMovies()
+
+        viewModel.popular.observe(viewLifecycleOwner, ::onPopularMovies)
+
         prepareBackgroundManager()
 
         setupUIElements()
-
-        loadRows()
 
         setupEventListeners()
     }
@@ -65,10 +76,10 @@ class MainFragment : BrowseSupportFragment() {
     private fun prepareBackgroundManager() {
 
         mBackgroundManager = BackgroundManager.getInstance(activity)
-        mBackgroundManager.attach(activity!!.window)
-        mDefaultBackground = ContextCompat.getDrawable(activity!!, R.drawable.default_background)
+        mBackgroundManager.attach(requireActivity().window)
+        mDefaultBackground = ContextCompat.getDrawable(requireActivity(), R.drawable.default_background)
         mMetrics = DisplayMetrics()
-        activity!!.windowManager.defaultDisplay.getMetrics(mMetrics)
+        requireActivity().windowManager.defaultDisplay.getMetrics(mMetrics)
     }
 
     private fun setupUIElements() {
@@ -78,44 +89,14 @@ class MainFragment : BrowseSupportFragment() {
         isHeadersTransitionOnBackEnabled = true
 
         // set fastLane (or headers) background color
-        brandColor = ContextCompat.getColor(activity!!, R.color.fastlane_background)
+        brandColor = ContextCompat.getColor(requireActivity(), R.color.fastlane_background)
         // set search icon color
-        searchAffordanceColor = ContextCompat.getColor(activity!!, R.color.search_opaque)
-    }
-
-    private fun loadRows() {
-        val list = MovieList.list
-
-        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
-        val cardPresenter = CardPresenter()
-
-        for (i in 0 until NUM_ROWS) {
-            if (i != 0) {
-                Collections.shuffle(list)
-            }
-            val listRowAdapter = ArrayObjectAdapter(cardPresenter)
-            for (j in 0 until NUM_COLS ) {
-                listRowAdapter.add(list[j % 5])
-            }
-            val header = HeaderItem(i.toLong(), MovieList.MOVIE_CATEGORY[i])
-            rowsAdapter.add(ListRow(header, listRowAdapter))
-        }
-
-        val gridHeader = HeaderItem(NUM_ROWS.toLong(), "PREFERENCES")
-
-        val mGridPresenter = GridItemPresenter()
-        val gridRowAdapter = ArrayObjectAdapter(mGridPresenter)
-        gridRowAdapter.add(resources.getString(R.string.grid_view))
-        gridRowAdapter.add(getString(R.string.error_fragment))
-        gridRowAdapter.add(resources.getString(R.string.personal_settings))
-        rowsAdapter.add(ListRow(gridHeader, gridRowAdapter))
-
-        adapter = rowsAdapter
+        searchAffordanceColor = ContextCompat.getColor(requireActivity(), R.color.search_opaque)
     }
 
     private fun setupEventListeners() {
         setOnSearchClickedListener {
-            Toast.makeText(activity!!, "Implement your own in-app search", Toast.LENGTH_LONG)
+            Toast.makeText(requireActivity(), "Implement your own in-app search", Toast.LENGTH_LONG)
                 .show()
         }
 
@@ -130,23 +111,23 @@ class MainFragment : BrowseSupportFragment() {
                 rowViewHolder: RowPresenter.ViewHolder,
                 row: Row) {
 
-            if (item is Movie) {
+            if (item is MovieEntity) {
                 Log.d(TAG, "Item: " + item.toString())
-                val intent = Intent(activity!!, DetailsActivity::class.java)
+                val intent = Intent(requireActivity(), DetailsActivity::class.java)
                 intent.putExtra(DetailsActivity.MOVIE, item)
 
                 val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                                activity!!,
+                                                requireActivity(),
                                                 (itemViewHolder.view as ImageCardView).mainImageView,
                                                 DetailsActivity.SHARED_ELEMENT_NAME)
                                         .toBundle()
                 startActivity(intent, bundle)
             } else if (item is String) {
                 if (item.contains(getString(R.string.error_fragment))) {
-                    val intent = Intent(activity!!, BrowseErrorActivity::class.java)
+                    val intent = Intent(requireActivity(), BrowseErrorActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(activity!!, item, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), item, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -155,8 +136,8 @@ class MainFragment : BrowseSupportFragment() {
     private inner class ItemViewSelectedListener : OnItemViewSelectedListener {
         override fun onItemSelected(itemViewHolder: Presenter.ViewHolder?, item: Any?,
                                     rowViewHolder: RowPresenter.ViewHolder, row: Row) {
-            if (item is Movie) {
-                mBackgroundUri = item.backgroundImageUrl
+            if (item is MovieEntity) {
+                mBackgroundUri = item.image
                 startBackgroundTimer()
             }
         }
@@ -165,8 +146,8 @@ class MainFragment : BrowseSupportFragment() {
     private fun updateBackground(uri: String?) {
         val width = mMetrics.widthPixels
         val height = mMetrics.heightPixels
-        Glide.with(activity!!)
-                .load(uri)
+        Glide.with(requireActivity())
+                .load(Constants.IMAGES_BASE_URL + uri)
                 .centerCrop()
                 .error(mDefaultBackground)
                 .into<SimpleTarget<Drawable>>(
@@ -198,7 +179,7 @@ class MainFragment : BrowseSupportFragment() {
             view.layoutParams = ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT)
             view.isFocusable = true
             view.isFocusableInTouchMode = true
-            view.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.default_background))
+            view.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.default_background))
             view.setTextColor(Color.WHITE)
             view.gravity = Gravity.CENTER
             return Presenter.ViewHolder(view)
@@ -209,6 +190,39 @@ class MainFragment : BrowseSupportFragment() {
         }
 
         override fun onUnbindViewHolder(viewHolder: Presenter.ViewHolder) {}
+    }
+
+    private fun onPopularMovies(list: List<MovieEntity>) {
+        loadRows(list)
+    }
+
+    private fun loadRows(list: List<MovieEntity>) {
+
+        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+        val cardPresenter = CardPresenter()
+
+        for (i in 0 until NUM_ROWS) {
+            if (i != 0) {
+                Collections.shuffle(list)
+            }
+            val listRowAdapter = ArrayObjectAdapter(cardPresenter)
+            for (j in 0 until NUM_COLS ) {
+                listRowAdapter.add(list[j % 5])
+            }
+            val header = HeaderItem(i.toLong(), MovieList.MOVIE_CATEGORY[i])
+            rowsAdapter.add(ListRow(header, listRowAdapter))
+        }
+
+        val gridHeader = HeaderItem(NUM_ROWS.toLong(), "PREFERENCES")
+
+        val mGridPresenter = GridItemPresenter()
+        val gridRowAdapter = ArrayObjectAdapter(mGridPresenter)
+        gridRowAdapter.add(resources.getString(R.string.grid_view))
+        gridRowAdapter.add(getString(R.string.error_fragment))
+        gridRowAdapter.add(resources.getString(R.string.personal_settings))
+        rowsAdapter.add(ListRow(gridHeader, gridRowAdapter))
+
+        adapter = rowsAdapter
     }
 
     companion object {

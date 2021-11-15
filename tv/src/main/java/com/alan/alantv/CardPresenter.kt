@@ -1,13 +1,13 @@
 package com.alan.alantv
 
 import android.graphics.drawable.Drawable
-import androidx.leanback.widget.ImageCardView
-import androidx.leanback.widget.Presenter
-import androidx.core.content.ContextCompat
 import android.util.Log
 import android.view.ViewGroup
-
-import com.bumptech.glide.Glide
+import androidx.core.content.ContextCompat
+import androidx.leanback.widget.ImageCardView
+import androidx.leanback.widget.Presenter
+import com.alan.core.data.wrappers.MovieEntity
+import com.alan.core.utils.loadImage
 import kotlin.properties.Delegates
 
 /**
@@ -40,19 +40,15 @@ class CardPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
-        val movie = item as Movie
+        val movie = item as MovieEntity
         val cardView = viewHolder.view as ImageCardView
 
         Log.d(TAG, "onBindViewHolder")
-        if (movie.cardImageUrl != null) {
+        if (movie.posterPath != null) {
             cardView.titleText = movie.title
-            cardView.contentText = movie.studio
+            cardView.contentText = movie.overview
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
-            Glide.with(viewHolder.view.context)
-                    .load(movie.cardImageUrl)
-                    .centerCrop()
-                    .error(mDefaultCardImage)
-                    .into(cardView.mainImageView)
+            cardView.mainImageView.loadImage(movie.image)
         }
     }
 

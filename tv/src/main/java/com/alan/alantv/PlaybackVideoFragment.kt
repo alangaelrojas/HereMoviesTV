@@ -7,6 +7,7 @@ import androidx.leanback.app.VideoSupportFragmentGlueHost
 import androidx.leanback.media.MediaPlayerAdapter
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.PlaybackControlsRow
+import com.alan.core.data.wrappers.MovieEntity
 
 /** Handles video playback with media controls. */
 class PlaybackVideoFragment : VideoSupportFragment() {
@@ -16,8 +17,8 @@ class PlaybackVideoFragment : VideoSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val (_, title, description, _, _, videoUrl) =
-                activity?.intent?.getSerializableExtra(DetailsActivity.MOVIE) as Movie
+        val (_, _, _, _, _, overview, _, _, _, title, video, _, _, _, _) =
+                activity?.intent?.getSerializableExtra(DetailsActivity.MOVIE) as MovieEntity
 
         val glueHost = VideoSupportFragmentGlueHost(this@PlaybackVideoFragment)
         val playerAdapter = MediaPlayerAdapter(activity)
@@ -26,10 +27,10 @@ class PlaybackVideoFragment : VideoSupportFragment() {
         mTransportControlGlue = PlaybackTransportControlGlue(getActivity(), playerAdapter)
         mTransportControlGlue.host = glueHost
         mTransportControlGlue.title = title
-        mTransportControlGlue.subtitle = description
+        mTransportControlGlue.subtitle = overview
         mTransportControlGlue.playWhenPrepared()
 
-        playerAdapter.setDataSource(Uri.parse(videoUrl))
+        //playerAdapter.setDataSource(Uri.parse(video))
     }
 
     override fun onPause() {
