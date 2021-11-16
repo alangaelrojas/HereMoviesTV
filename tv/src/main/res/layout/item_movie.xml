@@ -59,19 +59,19 @@
                 tools:text="Loremp ipsum for movie description and we need to fill text field" />
 
             <TextView
-                    android:id="@+id/average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_right_rounded"
-                    android:fontFamily="@font/roboto"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/cover"
-                    app:layout_constraintTop_toTopOf="@+id/cover"
-                    tools:text="9.0" />
+                android:id="@+id/average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_right_rounded"
+                android:fontFamily="@font/roboto"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/cover"
+                app:layout_constraintTop_toTopOf="@+id/cover"
+                tools:text="9.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

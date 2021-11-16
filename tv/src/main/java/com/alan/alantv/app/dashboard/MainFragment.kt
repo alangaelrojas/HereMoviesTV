@@ -97,7 +97,7 @@ class MainFragment : BrowseSupportFragment() {
         isHeadersTransitionOnBackEnabled = true
 
         // set fastLane (or headers) background color
-        brandColor = ContextCompat.getColor(requireActivity(), R.color.fastlane_background)
+        brandColor = ContextCompat.getColor(requireActivity(), R.color.purple_700)
         // set search icon color
         searchAffordanceColor = ContextCompat.getColor(requireActivity(), R.color.search_opaque)
     }
@@ -223,13 +223,12 @@ class MainFragment : BrowseSupportFragment() {
             rowsAdapter.add(ListRow(header, listRowAdapter))
         }
 
-        val gridHeader = HeaderItem(NUM_ROWS.toLong(), "PREFERENCES")
+        val gridHeader = HeaderItem(NUM_ROWS.toLong(), getString(R.string.about))
 
         val mGridPresenter = GridItemPresenter()
         val gridRowAdapter = ArrayObjectAdapter(mGridPresenter)
-        gridRowAdapter.add(resources.getString(R.string.grid_view))
-        gridRowAdapter.add(getString(R.string.error_fragment))
-        gridRowAdapter.add(resources.getString(R.string.personal_settings))
+        gridRowAdapter.add(resources.getString(R.string.about_heremovies))
+        gridRowAdapter.add(resources.getString(R.string.settings))
         rowsAdapter.add(ListRow(gridHeader, gridRowAdapter))
 
         adapter = rowsAdapter

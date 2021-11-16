@@ -54,22 +54,19 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="FullScreenDialogStyle" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorAccent">@color/teal_700</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/black</item>
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="helperTextTextColor">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="boxStrokeColor">@color/text_input_layout_stroke_colo</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="ItemCardView">
-        <item name="android:background">#000E0E0E</item>
+        <item name="android:background">#141414</item>
     </style>
 </resources>

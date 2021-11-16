@@ -68,11 +68,6 @@ class BrowserMoviesFragment : Fragment(), OnClickMovieListener, TextWatcher {
             }
             return@setOnEditorActionListener false
         }
-
-        binding.imgBack.setOnClickListener {
-            requireActivity().finish()
-        }
-
     }
 
     private fun setObservers(){

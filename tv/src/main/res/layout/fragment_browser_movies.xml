@@ -3,44 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/default_background"
         tools:context=".app.browsemovie.browermovies.BrowserMoviesFragment">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:contentDescription="@string/none"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
+            style="@style/TextInputLayout"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:hint="@string/label_search"
+            app:hintTextColor="@android:color/background_light"
             app:endIconMode="clear_text"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtSearch"
+                style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="16sp"
                 android:imeOptions="actionSearch"
-                style="@style/TextInputEditText" />
+                android:inputType="text"
+                android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

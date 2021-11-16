@@ -23,6 +23,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
@@ -42,7 +43,6 @@
                 android:inputType="text"
                 android:textSize="16sp"
                 android:imeOptions="actionSearch"
-                style="@style/TextInputEditText"
                 />
 
 
